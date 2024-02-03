@@ -216,6 +216,7 @@ See `org-columns-summary-types' for details.")
 (org-defkey org-columns-map "\C-c\C-o"           #'org-columns-open-link)
 (org-defkey org-columns-map "r"                  #'org-columns-redo)
 (org-defkey org-columns-map "g"                  #'org-columns-redo)
+(org-defkey org-columns-map "?"                  #'org-columns-help-quick-toggle)
 (org-defkey org-columns-map "q"                  #'org-columns-quit)
 
 (dotimes (i 10)
@@ -249,6 +250,46 @@ See `org-columns-summary-types' for details.")
     ["Open link" org-columns-open-link t]
     "--"
     ["Quit" org-columns-quit t]))
+
+(defvar org-columns-help-quick
+  '(("Move"
+     (org-columns-move-up . "up")
+     (org-columns-move-down . "down")
+     (backward-char . "left")
+     (forward-char . "right"))
+    ("Move column & row"
+     (org-columns-move-row-up . "move row up")
+     (org-columns-move-row-down . "move row down")
+     (org-columns-move-left . "move column left")
+     (org-columns-move-right . "move column right"))
+    ("Add & delete column"
+     (org-columns-new . "add column")
+     (org-columns-delete . "delete column"))
+    ("Edit column"
+     (org-columns-narrow . "narrow")
+     (org-columns-widen . "widen")
+     (org-columns-edit-attributes . "attributes"))
+    ("Edit values"
+     (org-columns-edit-value . "edit value")
+     (org-columns-edit-allowed . "edit allowed value")
+     (org-columns-next-allowed-value . "next allowed value")
+     (org-columns-previous-allowed-value . "previous allowed value")
+     (org-columns-toggle-or-columns-quit . "toggle checkbox or quit")
+     (org-columns-todo . "change TODO state"))
+    ("View"
+     (org-columns-content . "show content")
+     (org-overview . "show overview") ;;FIXME
+     (org-columns-show-value . "show value"))
+    ("Misc."
+     (org-columns-open-link . "open link")
+     (org-columns-redo . "redo")
+     (org-columns-quit . "quit"))))
+
+(defun org-columns-help-quick-toggle ()
+  (interactive)
+  (if (get-buffer "*Quick Help*")
+      (kill-buffer "*Quick Help*")
+    (help-quick org-columns-map)))
 
 (defun org-columns--displayed-value (spec value &optional no-star)
   "Return displayed value for specification SPEC in current entry.
