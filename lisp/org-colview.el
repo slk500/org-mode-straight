@@ -174,36 +174,50 @@ See `org-columns-summary-types' for details.")
   (org-cycle-overview)
   (org-cycle-content))
 
-(org-defkey org-columns-map "c"                  #'org-columns-content)
-(org-defkey org-columns-map "o"                  #'org-overview)
-(org-defkey org-columns-map "e"                  #'org-columns-edit-value)
-(org-defkey org-columns-map "\C-c\C-t"           #'org-columns-todo)
-(org-defkey org-columns-map "\C-c\C-c"           #'org-columns-toggle-or-columns-quit)
-(org-defkey org-columns-map "\C-c\C-o"           #'org-columns-open-link)
-(org-defkey org-columns-map "v"                  #'org-columns-show-value)
-(org-defkey org-columns-map "q"                  #'org-columns-quit)
-(org-defkey org-columns-map "r"                  #'org-columns-redo)
-(org-defkey org-columns-map "g"                  #'org-columns-redo)
-(org-defkey org-columns-map [left]               #'backward-char)
-(org-defkey org-columns-map "\M-b"               #'backward-char)
-(org-defkey org-columns-map "a"                  #'org-columns-edit-allowed)
-(org-defkey org-columns-map "s"                  #'org-columns-edit-attributes)
-(org-defkey org-columns-map "\M-f"               #'forward-char)
-(org-defkey org-columns-map [right]              #'forward-char)
+;; Move
 (org-defkey org-columns-map [up]                 #'org-columns-move-up)
 (org-defkey org-columns-map [down]               #'org-columns-move-down)
+(org-defkey org-columns-map [left]               #'backward-char)
+(org-defkey org-columns-map [right]              #'forward-char)
+(org-defkey org-columns-map "\M-b"               #'backward-char)
+(org-defkey org-columns-map "\M-f"               #'forward-char)
+
+;; Move column & row
+(org-defkey org-columns-map [(meta up)]          #'org-columns-move-row-up)
+(org-defkey org-columns-map [(meta down)]        #'org-columns-move-row-down)
+(org-defkey org-columns-map [(meta left)]        #'org-columns-move-left)
+(org-defkey org-columns-map [(meta right)]       #'org-columns-move-right)
+
+;; Add & delete column
+(org-defkey org-columns-map [(shift meta left)]  #'org-columns-delete)
+(org-defkey org-columns-map [(shift meta right)] #'org-columns-new)
+
+;; Edit attributes
+(org-defkey org-columns-map "<"                  #'org-columns-narrow)
+(org-defkey org-columns-map ">"                  #'org-columns-widen)
+(org-defkey org-columns-map "s"                  #'org-columns-edit-attributes)
+
+;; Edit values
+(org-defkey org-columns-map "e"                  #'org-columns-edit-value)
+(org-defkey org-columns-map "a"                  #'org-columns-edit-allowed)
 (org-defkey org-columns-map [(shift right)]      #'org-columns-next-allowed-value)
 (org-defkey org-columns-map "n"                  #'org-columns-next-allowed-value)
 (org-defkey org-columns-map [(shift left)]       #'org-columns-previous-allowed-value)
 (org-defkey org-columns-map "p"                  #'org-columns-previous-allowed-value)
-(org-defkey org-columns-map "<"                  #'org-columns-narrow)
-(org-defkey org-columns-map ">"                  #'org-columns-widen)
-(org-defkey org-columns-map [(meta right)]       #'org-columns-move-right)
-(org-defkey org-columns-map [(meta left)]        #'org-columns-move-left)
-(org-defkey org-columns-map [(meta down)]        #'org-columns-move-row-down)
-(org-defkey org-columns-map [(meta up)]          #'org-columns-move-row-up)
-(org-defkey org-columns-map [(shift meta right)] #'org-columns-new)
-(org-defkey org-columns-map [(shift meta left)]  #'org-columns-delete)
+(org-defkey org-columns-map "\C-c\C-c"           #'org-columns-toggle-or-columns-quit)
+(org-defkey org-columns-map "\C-c\C-t"           #'org-columns-todo)
+
+;; View
+(org-defkey org-columns-map "c"                  #'org-columns-content)
+(org-defkey org-columns-map "o"                  #'org-overview)
+(org-defkey org-columns-map "v"                  #'org-columns-show-value)
+
+;; Misc
+(org-defkey org-columns-map "\C-c\C-o"           #'org-columns-open-link)
+(org-defkey org-columns-map "r"                  #'org-columns-redo)
+(org-defkey org-columns-map "g"                  #'org-columns-redo)
+(org-defkey org-columns-map "q"                  #'org-columns-quit)
+
 (dotimes (i 10)
   (org-defkey org-columns-map (number-to-string i)
 	      (lambda () (interactive)
