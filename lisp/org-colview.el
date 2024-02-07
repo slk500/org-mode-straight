@@ -177,10 +177,24 @@ See `org-columns-summary-types' for details.")
 ;; Move
 (org-defkey org-columns-map [up]                 #'org-columns-move-up)
 (org-defkey org-columns-map [down]               #'org-columns-move-down)
-(org-defkey org-columns-map [left]               #'backward-char)
-(org-defkey org-columns-map [right]              #'forward-char)
+(org-defkey org-columns-map [left]               #'org-columns-move-cursor-left)
+(org-defkey org-columns-map [right]              #'org-columns-move-cursor-right)
 (org-defkey org-columns-map "\M-b"               #'backward-char)
 (org-defkey org-columns-map "\M-f"               #'forward-char)
+
+(defun org-columns-move-cursor-right ()
+  (interactive)
+  (if (< (+ 1 (org-current-text-column)) (length org-columns-current-fmt-compiled))
+    (forward-char)
+    (org-columns-move-down)
+    (goto-char (line-beginning-position))))
+
+(defun org-columns-move-cursor-left ()
+  (interactive)
+  (if (= (org-current-text-column) 0)
+      (progn (org-columns-move-up)
+             (forward-char (- (length org-columns-current-fmt-compiled) 1)))
+    (backward-char)))
 
 ;; Move column & row
 (org-defkey org-columns-map [(meta up)]          #'org-columns-move-row-up)
